@@ -137,76 +137,6 @@ def is_valid_email(input):
         if not is_valid_name(char, "", 1): return False
     return True
 
-def get_js_energy_vs_RMSD(path):
-    f = open(path)
-    lines = f.readlines()
-    f.close()
-    lines.pop(0)
-
-    min_energy = 10000
-    max_energy = -1000
-
-    ind_rms = 0
-    for l in lines:
-        spl = l.split()
-        if spl[1] == "total_score":
-			# label line
-            ind_rms = spl.index( "rms_from_starting" )
-        break
-
-    for l in lines:
-        spl = l.split()
-        if spl[1] == "total_score": continue
-        energy = float(spl[1])
-        if energy < min_energy:
-            min_energy = energy
-        if energy > max_energy:
-            max_energy = energy
-
-    s = """ var chart2 = new CanvasJS.Chart("EnergyScatter",
-    {
-      title:{
-        text: "RMSD vs Rosetta Energy"
-      },
-      axisY: {
-        title: "Rosetta Energy",
-        maximum: """ + str(round(max_energy)) + ",\n" + \
-        "minimum: " + str(round(min_energy))  + ",\n" + \
-      """
-      },
-
-      axisX: {
-        title: "RMSD",
-        interval: 1,
-        intervalType: "number",
-        valueFormatString: "##.#"
-      },
-      data: [
-      {
-        type: "scatter",
-        dataPoints: [
-    """
-    i = 10
-
-    for l in lines:
-        spl = l.split()
-        if spl[1] == "total_score": continue
-        energy = spl[1]
-        RMSD = spl[ind_rms]
-        s += "{ x: " + RMSD + ", y: "+ energy + ", toolTipContent: \"" + spl[0] + "\"}," + "\n"
-
-    s += """ ]
-      }
-      ]
-    });
-
-    chart2.render();
-    chart2 = {}
-    """
-
-    return s
-
-
 def format_pdb_num(num):
     s = "S_"
 
@@ -312,9 +242,7 @@ class rest:
         score_file = "data/" + dir_id + "/score.sc"
 
         s = get_html_head()
-        s += " <script type=\"text/javascript\">\nwindow.onload = function () {\n"
-        s += get_js_energy_vs_RMSD(RMSD_file)
-        s += "}\n</script></head>"
+        s += "</head>"
         s += "<body>\n"
         s += get_nav_bar()
         s += "<center><H2>Job "+dir_id + " Results </H2></center>"
@@ -328,11 +256,13 @@ class rest:
         s += "<br><br><br>"
 
         s += "<br /><br />"
-        s += "<img src=/data/"+dir_id+"/cluster_1.png />"
-        s += "<img src=/data/"+dir_id+"/cluster_2.png />"
-        s += "<img src=/data/"+dir_id+"/cluster_3.png />"
-        s += "<div id=\"EnergyScatter\" style=\"height: 300px; width: 100%; \"></div>"
-        s += "</body></html>"
+        s += "<table><tr><th colspan='3'><center><h3>Top three clusters</h3></center></th></tr>"
+        s += "<tr><td><img src=/data/"+dir_id+"/cluster_1.png /></td>"
+        s += "<td><img src=/data/"+dir_id+"/cluster_2.png /></td>"
+        s += "<td><img src=/data/"+dir_id+"/cluster_3.png /></td></tr>"
+        s += "<tr><th colspan='3'><center><h3>Score vs. RMSD</h3></center></th></tr>"
+        s += "<tr><td colspan='3'><img src=/data/"+dir_id+"/svr.png /></tr></tr>"
+        s += "</table></body></html>"
 
         return s
 

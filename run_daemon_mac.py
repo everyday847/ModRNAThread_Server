@@ -66,7 +66,7 @@ def output_png( pdb, num ):
         e = sys.exc_info()[0]
         print e
     
-	try:
+    try:
         subprocess.call(["convert", "test.png", "-trim", "cluster_%s.png" % str(num) ])
     except:
         e = sys.exc_info()[0]
@@ -97,7 +97,11 @@ def get_top_clusters():
     energies = [ float(line.split()[1]) for line in lines ] 
     RMSDs =    [ float(line.split()[ind_rms]) for line in lines ] 
     
+    print energies
+    print RMSDs
+
     import matplotlib.pyplot as plt
+    import numpy as np
     plt.scatter( np.array( RMSDs ), np.array( energies ) )
     plt.savefig( "svr.png" )
 
