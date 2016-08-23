@@ -1,0 +1,11 @@
+Thank you for using ModRNAThread!
+
+Here is a quick explanation of each file that was contained in this zip file.
+
+start.pdb:   The pdb submitted to the server, converted into rosetta format.
+
+S_000*.pdb:  The finished, threaded conformation for each round. The number at the end signifies which round it came from. Each round is unique, so ordering does not matter.
+
+summary.txt: The summary of the rosetta energy and RMSD for each round.
+
+  

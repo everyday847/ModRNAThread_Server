@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/images/rna_redesign_icon_2.jpg">
+    <title>ModRNAThread</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/res/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/res/css/theme.css" rel="stylesheet">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/res/js/bootstrap.min.js"></script>
+    <script src="/res/js/canvasjs.min.js"></script>
+</script>
+
+
+    <script>
+  $(document).ready(function () {
+      $(function () {
+        $("[data-toggle='popover']").popover({trigger:"hover"}); 
+        $("[data-toggle='tooltip']").tooltip(); 
+      })
+
+      $('#up').on('click', function(e){
+        e.preventDefault();
+        $('html, body').stop().animate({scrollTop: $('#down').offset().top}, 500);
+      });
+      $('#tab_1').on('click', function(e){
+        e.preventDefault();
+        $('html, body').stop().animate({scrollTop: $('#web_input').offset().top}, 500);
+      });
+      $('#tab_2').on('click', function(e){
+        e.preventDefault();
+        $('html, body').stop().animate({scrollTop: $('#web_output_primers').offset().top}, 500);
+      });
+      $('#tab_3').on('click', function(e){
+        e.preventDefault();
+        $('html, body').stop().animate({scrollTop: $('#web_output_assembly').offset().top}, 500);
+      });
+      $('#tab_4').on('click', function(e){
+        e.preventDefault();
+        $('html, body').stop().animate({scrollTop: $('#txt_output').offset().top}, 500);
+      });
+      $('#tab_5').on('click', function(e){
+        e.preventDefault();
+        $('html, body').stop().animate({scrollTop: $('#idt_bulk').offset().top}, 500);
+      });
+      $('#tab_6').on('click', function(e){
+        e.preventDefault();
+        $('html, body').stop().animate({scrollTop: $('#PCR').offset().top}, 500);
+      });
+    })
+
+    window.onload = function () {
+ var chart1 = new CanvasJS.Chart("NativeRecovery",
+    {
+      title:{
+        text: "Native Sequence Recovery"
+      },
+      axisY: {
+        title: "Native Recovery",
+        maximum: 1.00,
+        interlacedColor: "#F8F1E4",
+        tickLength: 10,
+        labelFontSize: 25,
+        interval: 0.25
+      },
+
+      axisX: {
+        title: "Residues"
+      },
+      data: [
+      {
+        type: "column",
+         dataPoints: [
+    { x: 10, y: 1.000, label: "C1 ", color: "Green" },
+{ x: 20, y: 0.200, label: "C2 ", color: "Green" },
+{ x: 30, y: 1.000, label: "U3 ", color: "Blue" },
+{ x: 40, y: 1.000, label: "U4 ", color: "Blue" },
+{ x: 50, y: 0.000, label: "C5 ", color: "Green" },
+{ x: 60, y: 1.000, label: "G6 ", color: "Red" },
+{ x: 70, y: 0.200, label: "G7 ", color: "Red" },
+{ x: 80, y: 1.000, label: "G8 ", color: "Red" },
+ ]
+      }
+      ]
+    });
+
+    chart1.render();
+    chart1 = {}
+    }
+
+    </script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/res/html/Design.html">&nbsp;&nbsp;ModRNAThread&nbsp;&nbsp;</a>
+          
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/res/html/Design.html">Home</a></li>
+            <li class="active"><a href="/res/html/Tutorial.html">Tutorial</a></li>
+            <li><a href="/res/html/About.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+     <div class="starter-template" id="down">
+      <div class="container theme-showcase" role="main">
+        <div class="jumbotron">
+          <div class="container">
+            <h1>ModRNAThreadDocumentation</h1>
+            <p>This tutorial walks you through the basics of the website interface, explains the parameters you might want to supply, and how to interpret results, Hover mouse to the <img style="opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px"> for detailed descriptions. 
+            </p>
+            <br>
+          </div>
+        </div>
+      </div>
+      <hr id="learn_more">
+
+      <div class="container theme-showcase" role="main">
+        <ul class="list-group">
+          <a id="tab_1" href="#web_input" class="list-group-item list-group-item-info"><h4>Section #1: Website Input</h4></a>
+          <a id="tab_2" href="#web_output_primers" class="list-group-item list-group-item-primary active"><h4>Section #2: Job Output</h4></a>
+        </ul>
+      </div>
+      <hr id="web_input" style="height:2px;color:#000000;background-color:#000000">
+      
+      <div class="container theme-showcase" role="main" >
+        <div class="page-header">
+          <h1>Section <kbd>#1</kbd>: Website Input</h1>
+        </div>
+ 
+        <h2>Input PDB File and Parameters</h2>
+  
+        <form method='post' class="form-horizontal" action='/design_primers' enctype="multipart/form-data">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Select RNA PDB: <input type="file" name="pdb_file"  disabled="disabled"/>
+                    </span>
+                </span>
+                <input type="text" class="form-control" value="uucg_RNA.pdb" style = "width: 40%;" readonly>
+
+                <img style="position:absolute;display:block;right:40%;top:0%;opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px" data-toggle="popover" data-placement="right" title="Select local PDB from file" data-content="Select the RNA pdb from your computer that you would like to upload to the server. If you would just like to test the server, click Demo at the bottom"/>
+
+
+            </div>
+                      
+         <div class="form-group">
+             <h4><label class="control-label col-xs-2" for="sel1" style="text-align : left"># Designs</label></h4>
+            <div class="col-sm-6">
+             
+            <select class="form-control" name="nstructs", style="width: 20%; margin-left" disabled="disabled">
+                <option>5</option>
+                <option>10</option>
+                <option>50</option>
+            </select>
+
+            
+            <img style="position:absolute;display:block;right:60%;top:0%;opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px" data-toggle="popover" data-placement="right" title="Select number of designs" data-content="Default is 5, primarily for testing purposes. The more threaded samples you generate, the more likely you are to find a well-converged solution, though the job will take longer." />
+            </div>
+            <br/> <br/>
+
+ 
+            <h4><label class="control-label" style="text-align : left; margin-left : 15px"> If you would like to recieve an email upon completion of the run please enter it below, this optional.</label></h4>
+            <div class="col-sm-6">
+            <input type="text", name="email", class="form-control"  style = "width: 60%;" placeholder="Enter email" disabled="disabled">
+               <img style="position:absolute;display:block;right:20%;top:0%;opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px" data-toggle="popover" data-placement="right" title="Enter your email" data-content="Enter your email address to get updates about your job. This is optional"/>
+
+
+            </div>
+
+
+                <br />
+               <br />
+            <br />
+        </div>
+
+        <div class="col-sm-12">
+        
+            <input type="submit" id="btn_submit" class="btn btn-primary"  style="margin-left : -15px" value="&nbsp;Redesign RNA&nbsp;" disabled="disabled"/>&nbsp;
+            <a href="/example_uucg" id="btn_demo" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Example of ModRNAThread using a tRNA sequence." disabled="disabled">&nbsp;&nbsp;Demo&nbsp;&nbsp;</a>
+
+             <img style="position:absolute;display:block;right:60%;top:0%;opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px" data-toggle="popover" data-placement="right" title="Submit your job or run demo" data-content="Once you have loaded your pdb, hitting submit will queue your job. Or if you prefer you can hit demo without submitting a pdb"/>
+
+        </div>
+        </form>
+
+           </div>
+      <hr id="web_output_primers" style="height:2px;color:#000000;background-color:#000000">
+
+    <div class="container theme-showcase" role="main">
+        <div class="page-header">
+      <h1>Section <kbd>#2</kbd>: Job Results</h1>
+     </div>
+    <div class="col-sm-12">
+     
+     <button type="button" class="btn btn-primary" style="margin-left : -15px" >Download Everything</button>&nbsp;&nbsp;
+         <img style="position:absolute;display:block;right:45%;top:0%;opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px" data-toggle="popover" data-placement="right" title="Download your job data" data-content="you can either download all the models and results using 'Download everything' "/>
+    </div>
+   
+   <!-- AMW TODO this tutorial section should deviate -->
+        <br><br><br>
+         <div class="col-sm-12">
+        <div><table><tr><td><img src=/res/images/cluster_0_ex.png height=25%></td><td><img src=/res/images/cluster_1_ex.png height=25%></td><td><img src=/res/images/cluster_2_ex.png height=25%></td><td><img src=/res/images/cluster_3_ex.png height=25%></td><td><img src=/res/images/cluster_4_ex.png height=25%></td></tr></table></div>
+                 <img style="position:absolute;display:block;right:100%;top:0%;opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px" data-toggle="popover" data-placement="right" title="Clustered models" data-content="visual representation of the models that had the lowest rosetta energy. G(red), C(green), A(yellow), U(blue)"/>
+
+        </div>
+        
+        <br /><br />
+        <div class="col-sm-12">
+        <img src=/res/images/weblogo_ex.png />
+           <img style="position:absolute;display:block;right:100%;top:0%;opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px" data-toggle="popover" data-placement="right" title="Weblogo" data-content="Nucleotide preference at each sequence position. G(red), C(green), A(orange), U(blue)"/>
+       </div>
+       <br / >
+
+        <div class="col-sm-12">
+
+        <div id="NativeRecovery" style="height: 300px; width: 100%; "></div>
+        <img style="position:absolute;display:block;right:100%;top:0%;opacity:0.85;" src="/res/images/fg_question.png" height="40px" width="40px" data-toggle="popover" data-placement="right" title="Native sequence recovery" data-content="visual representation of of the likelyhood of the native residue to inhabit the correct position. 1.0 means it always correctly build, 0 means it never is. (red), C(green), A(orange), U(blue)"/>
+
+        </div>
+    </div>
+    </div>
+
+
+
+    <a href="#" id="up"><img style="position:fixed;display:block;right:5%;bottom:5%;opacity:0.85;" src="/res/images/fg_top.png" height="60px" width="60px"/></a>
+ <div class="container">
+       <table>
+       <tr>
+       <td>
+           <p class="muted credit">Maintained by the</p>
+       </td>
+        <td>
+        <a href="http://daslab.stanford.edu" target="_blank" data-toggle="tooltip" data-placement="top" title="Das Lab"><img src="/res/images/logo_das.jpg" height="42" style=""></a>
+        </td>
+        <td>
+        <a href="http://med.stanford.edu" target="_blank" data-toggle="tooltip" data-placement="top" title="Stanford University"><img src="/res/images/logo_stanford.png" height="42" style=""></a>
+    </td>
+        <td>
+        <a href="http://www.rosettacommons.org" target="_blank" data-toggle="tooltip" data-placement="top" title="Rosetta Commons"><img src="/res/images/logo_rosetta.png" height="42" style=""></a>
+    </td>
+        <br><br>
+             </div>
+      </tr>
+      </td>
+  </table>
+
+  </body>
+</html>

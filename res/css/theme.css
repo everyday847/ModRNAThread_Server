@@ -1,0 +1,98 @@
+body {
+  padding-top: 50px;
+  padding-bottom: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+img {
+   max-width: 100%;
+   height: auto;
+   width: auto\9; /* ie8 */
+   
+   display:block;
+}
+
+th, td {
+    padding-right: 25px;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+.jumbotron {
+  padding: 14px 24px;
+  font-size: 21px;
+}
+
+
+.bgimg {
+  background-image: url("/images/bg_rna.png");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: 30%;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+
+
+html { 
+  overflow-y: scroll; 
+}
+
+.starter-template {
+  padding: 40px 15px;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+
+.tutorial{
+  opacity:0.5;
+}
+
+
+.popover-title{
+    background-color: #000000;
+    border-color: #fbad24;
+    color: #ffffff;
+    opacity:0.9;
+}
+
+.popover-content {
+    background-color: #000000;
+    border-color: #fbad24;
+    color: #7cafd3;
+    opacity:0.8;
+}
+

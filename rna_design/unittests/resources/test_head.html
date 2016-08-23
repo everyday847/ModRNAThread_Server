@@ -1,0 +1,36 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/images/EteRNA_shortcut.png">
+    <title>ModRNAThread Server</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/res/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/res/css/theme.css" rel="stylesheet">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/res/js/bootstrap.min.js"></script>
+    <script src="/res/js/canvasjs.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#is_agree").click(function() {
+                  if ($(this).is(":checked")) {
+                   $("#btn_submit").removeAttr("disabled");
+                   $("#btn_demo").removeAttr("disabled");
+                   $(this).parent().css("color","black");
+                 } else {
+                    $("#btn_submit").attr("disabled", "disabled");
+                   $("#btn_demo").attr("disabled", "disabled");
+                      $(this).parent().css("color","red");
+                  }
+            });
+        });
+     </script>
+</head>
+

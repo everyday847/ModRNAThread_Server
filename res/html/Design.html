@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/images/EteRNA_shortcut.png">
+    <title>ModRNAThread Server</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/res/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/res/css/theme.css" rel="stylesheet">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/res/js/bootstrap.min.js"></script>
+
+    <script>
+
+
+      $(document).ready(function () {
+        $("#is_agree").click(function() {
+          if ($(this).is(":checked")) {
+              $("#btn_submit").removeAttr("disabled");
+              $("#btn_demo").removeAttr("disabled");
+              $(this).parent().css("color","black");
+          } else {
+              $("#btn_submit").attr("disabled", "disabled");
+              $("#btn_demo").attr("disabled", "disabled");
+              $(this).parent().css("color","red");
+          }
+        });
+        $("#sequence").keyup(function(){
+          $("#count").text($(this).val().length);
+          if ($(this).val().length < 60) {
+              $("#count").parent().parent().css("color","red");
+          } else {
+              $("#count").parent().parent().css("color","black");
+          }
+        });
+        $("#check_num_primers").click(function() {
+          if ($(this).is(":checked")) {
+              $("#text_num_primers").removeAttr("disabled");
+          } else {
+              $("#text_num_primers").attr("disabled", "disabled");
+          }
+        });
+       });
+      $(function () {
+        $("[data-toggle='tooltip']").tooltip(); 
+      })
+
+        $(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  input.trigger('fileselect', [numFiles, label]);
+});
+
+$(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+        
+        var input = $(this).parents('.input-group').find(':text'),
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+        
+        if( input.length ) {
+            input.val(log);
+        } else {
+            if( log ) alert(log);
+        }
+        
+    });
+});
+
+    </script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/res/html/Design.html">&nbsp;&nbsp;ModRNAThread&nbsp;&nbsp;</a>
+          
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/res/html/Design.html">Home</a></li>
+            <li><a href="/res/html/Tutorial.html">Tutorial</a></li>
+            <li><a href="/res/html/About.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">    
+    <div class="jumbotron">
+        <h1>Welcome!</h1>
+        <p class="lead">Here you can submit any RNA PDB structure and a corresponding sequence and/or list of mutations and insertions.
+		<a href="#submit"><button class="btn btn-success">Get Started »</button></a>
+ 
+        </p>
+        
+        <img src="/res/images/front_image.trim.png" />
+        
+      </div>
+  </div>
+
+    <div class="container">         
+        <a name="submit"></a> 
+        <h2>Input PDB File and Parameters</h2>
+  
+        <form method='post' class="form-horizontal" action='/thread_rna' enctype="multipart/form-data">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Select RNA PDB: <input type="file" name="pdb_file" />
+                    </span>
+                </span>
+                <input type="text" class="form-control"  style = "width: 40%;" readonly>
+
+            </div>
+                      
+         <div class="form-group">
+             
+			<!-- AMW TODO: this is where we put all our options --> 
+			<h4><label class="control-label col-xs-2" for="sel1" style="text-align : left"># Models</label></h4>
+			<h6><br />If you don't have insertions or deletions you probably don't need many.</h6>
+            <div class="col-sm-6">
+              <select class="form-control" name="nstruct", style="width: 20%; margin-left">
+                <option>10</option>
+                <option>50</option>
+                <option>100</option>
+              </select>
+            </div>
+            <br/> <br/>
+            
+			<h4><label class="control-label" style="text-align : left; margin-left : 15px">Target sequence to thread ('-' indicates a deleted position)</label></h4>
+            <input type="text", name="sequence", class="form-control"  style = "width: 40%; margin-left : 15px" placeholder="acguacgu">
+            <br /> <br />
+
+			<h4><label class="control-label" style="text-align : left; margin-left : 15px">Residue name format (default: Rosetta annotated sequence; MODOMICS or IUPAC)</label></h4>
+            <div class="col-sm-6">
+              <select class="form-control" name="format", style="width: 20%; margin-left">
+                <option>DEFAULT</option>
+                <option>MODOMICS</option>
+                <option>IUPAC</option>
+              </select>
+            </div>
+            <br /> <br />
+
+            <h4><label class="control-label" style="text-align : left; margin-left : 15px">Mutation list (leave target sequence blank; formatted as seqpos,res seqpos,res ...)</label></h4>
+            <input type="text", name="mutation_list", class="form-control"  style = "width: 40%; margin-left : 15px" placeholder="19,c 21,a">
+            <br /> <br />
+
+            <h4><label class="control-label" style="text-align : left; margin-left : 15px">Insertion list (formatted as preceding seqpos,res(s) sepos,res(s) ...)</label></h4>
+            <input type="text", name="insertion_list", class="form-control"  style = "width: 40%; margin-left : 15px" placeholder="34,gau 54,a">
+            <br /> <br />
+
+ 
+            <h4><label class="control-label" style="text-align : left; margin-left : 15px"> If you would like to receive an email upon completion of the run, please enter it below. (optional)</label></h4>
+            <input type="text", name="email", class="form-control"  style = "width: 40%; margin-left : 15px" placeholder="Enter email">
+            <br /> <br />
+
+        </div>
+            <input type="submit" id="btn_submit" class="btn btn-primary" value="&nbsp;Thread RNA&nbsp;"/>&nbsp;
+            <a href="/example_trna" id="btn_demo" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Example of ModRNAThread using a tRNA sequence.">&nbsp;&nbsp;Demo&nbsp;&nbsp;</a>
+
+           
+
+        </form>
+    </div>
+
+      </div>
+    </div>
+   </div>
+   </div>
+    <div class="container">
+       <table>
+       <tr>
+       <td>
+           <p class="muted credit">Maintained by the</p>
+       </td>
+       <td>
+        <a href="http://daslab.stanford.edu" target="_blank" data-toggle="tooltip" data-placement="top" title="Das Lab"><img src="/res/images/logo_das.jpg" height="42" style=""></a>
+        </td>
+        <td>
+        <a href="http://med.stanford.edu" target="_blank" data-toggle="tooltip" data-placement="top" title="Stanford University"><img src="/res/images/logo_stanford.png" height="42" style=""></a>
+    </td>
+        <td>
+        <a href="http://www.rosettacommons.org" target="_blank" data-toggle="tooltip" data-placement="top" title="Rosetta Commons"><img src="/res/images/logo_rosetta.png" height="42" style=""></a>
+    </td>
+        <br><br>
+             </div>
+      </tr>
+      </td>
+  </table>
+
+  </body>
+</html>

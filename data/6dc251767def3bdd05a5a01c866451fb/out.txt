@@ -1,0 +1,176 @@
+core.init: Rosetta version unknown:3b81a446e8243f62b5e41c76952b16b2358bb955 2016-08-22 16:34:30 -0700 from git@github.com:RosettaCommons/main.git
+core.init: command: /Users/amw579/Rosetta/main/source/bin/rna_thread_and_minimize.macosclangrelease -s rna.pdb -nstruct 10 -score:weights rna_minimize -mutation_list 21,a
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-638253650 seed_offset=0 real_seed=-638253650
+core.init.random: RandomGenerator:init: Normal mode, seed=-638253650 RG_type=mt19937
+core.init: Resolved executable path: /Users/amw579/Rosetta/main/source/bin/rna_thread_and_minimize.macosclangrelease
+core.init: Looking for database based on location of executable: /Users/amw579/Rosetta/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 451 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 0.911494 seconds.
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C12 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C13 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C14 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C15 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C16 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: [ WARNING ] discarding 1 atoms at position 1 in file rna.pdb. Best match rsd_type:  RGU:LowerRNA
+core.io.pose_from_sfr.chirality_resolution: Flipping atom xyz for  OP1 and  OP2 for residue   G
+core.io.pose_from_sfr.chirality_resolution: Flipping atom xyz for  H21 and  H22 for residue   G
+core.io.pose_from_sfr.chirality_resolution: Number of flip-atom fixups exceeds output limit. Rerun with -show_all_fixes to show everything.
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C12 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C13 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C14 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C15 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C16 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C14 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C15 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C16 on residue MIA 36
+core.chemical.AtomICoor: Warning from IcoorAtomID::xyz(): Cannot get xyz for POLYMER_LOWER of residue CYS:CtermConnect 75.  Returning BOGUS coords (null vector).
+core.conformation.Conformation: Connecting residues: 74 ( RAD:UpperConnectionRNA ) and 75 ( CYS:CtermConnect ) at atoms  O3' and  C  
+core.conformation.Conformation:  with mutual distances: 1.37771 and 0.773653
+core.conformation.Conformation: Failed to find a residue connection for residue 75 with connection point 1
+core.io.pose_from_sfr.PoseFromSFRBuilder: [ WARNING ] can't find pose atom for file-residue 1 atom  OP3 (trying to store temperature in PDBInfo)
+core.pack.pack_missing_sidechains: packing residue number 36 because of missing atom number 22 atom name  C12
+core.pack.task: Packer task: initialize from command line() 
+core.scoring.ScoreFunctionFactory: SCOREFUNCTION: rna_minimize
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/rama/fd/all.ramaProb
+basic.io.database: Database file opened: scoring/score_functions/rama/fd/prepro.ramaProb
+basic.io.database: Database file opened: scoring/score_functions/P_AA_pp/P_AA
+basic.io.database: Database file opened: scoring/score_functions/P_AA_pp/P_AA_n
+basic.io.database: Database file opened: scoring/score_functions/P_AA_pp/P_AA_pp
+core.pack.dunbrack.RotamerLibrary: Using Dunbrack library binary file '/Users/amw579/Rosetta/main/database/rotamer/ExtendedOpt1-5/Dunbrack10.lib.bin'.
+core.pack.dunbrack.RotamerLibrary: Dunbrack 2010 library took 0.728905 seconds to load from binary
+core.pack.rotamer_set.RotamerSet_: [ WARNING ]  including current in order to get at least 1 rotamer !!!!!! 36 MIA
+core.pack.pack_rotamers: built 1 rotamers at 1 positions.
+core.pack.interaction_graph.interaction_graph_factory: Instantiating DensePDInteractionGraph
+core.pack.interaction_graph.interaction_graph_factory: IG: 800 bytes
+core.scoring.ScoreFunctionFactory: SCOREFUNCTION: rna_minimize
+protocols.jd2.PDBJobInputter: Instantiate PDBJobInputter
+protocols.jd2.PDBJobInputter: PDBJobInputter::fill_jobs
+protocols.jd2.PDBJobInputter: pushed rna.pdb nstruct indices 1 - 10
+protocols.evaluation.ChiWellRmsdEvaluatorCreator: Evaluation Creator active ... 
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from PDB rna.pdb
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C12 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C13 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C14 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C15 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: PDB reader is ignoring atom  C16 in residue 37 R.  Pass flag -ignore_zero_occupancy false to change this behavior
+core.io.pose_from_sfr.PoseFromSFRBuilder: [ WARNING ] discarding 1 atoms at position 1 in file rna.pdb. Best match rsd_type:  RGU:LowerRNA
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C12 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C13 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C14 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C15 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C16 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C14 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C15 on residue MIA 36
+core.conformation.Conformation: [ WARNING ] missing heavyatom:  C16 on residue MIA 36
+core.chemical.AtomICoor: Warning from IcoorAtomID::xyz(): Cannot get xyz for POLYMER_LOWER of residue CYS:CtermConnect 75.  Returning BOGUS coords (null vector).
+core.conformation.Conformation: Connecting residues: 74 ( RAD:UpperConnectionRNA ) and 75 ( CYS:CtermConnect ) at atoms  O3' and  C  
+core.conformation.Conformation:  with mutual distances: 1.37771 and 0.773653
+core.conformation.Conformation: Failed to find a residue connection for residue 75 with connection point 1
+core.io.pose_from_sfr.PoseFromSFRBuilder: [ WARNING ] can't find pose atom for file-residue 1 atom  OP3 (trying to store temperature in PDBInfo)
+core.pack.pack_missing_sidechains: packing residue number 36 because of missing atom number 22 atom name  C12
+core.pack.task: Packer task: initialize from command line() 
+core.scoring.ScoreFunctionFactory: SCOREFUNCTION: rna_minimize
+core.pack.rotamer_set.RotamerSet_: [ WARNING ]  including current in order to get at least 1 rotamer !!!!!! 36 MIA
+core.pack.pack_rotamers: built 1 rotamers at 1 positions.
+core.pack.interaction_graph.interaction_graph_factory: Instantiating DensePDInteractionGraph
+core.pack.interaction_graph.interaction_graph_factory: IG: 800 bytes
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0001 reported success in 3 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0002 reported success in 1 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0003 reported success in 1 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0004 reported success in 1 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0005 reported success in 1 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0006 reported success in 0 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0007 reported success in 1 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0008 reported success in 1 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0009 reported success in 1 seconds
+protocols.jd2.PDBJobInputter: PDBJobInputter::pose_from_job
+protocols.jd2.PDBJobInputter: filling pose from saved copy rna.pdb
+Current length of pose is 75
+Target sequence: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+...has true length 75
+MUTLIST: 21,aCURRENT: g[RGU:LowerRNA]gcgcguX[4SU]aacaaagcggX[H2U]X[H2U]auguagcggaX[PSU]ugcaX[MIA]aX[PSU]ccgucuaguccggX[5MU]X[PSU]cgacuccggaacgcgccucca[RAD:UpperConnectionRNA]C[CYS:CtermConnect]
+Changed residues (without offset applied): 
+Changed residues (in residue numbering): 
+protocols.jd2.JobDistributor: rna_0010 reported success in 1 seconds
+protocols.jd2.JobDistributor: no more batches to process... 
+protocols.jd2.JobDistributor: 10 jobs considered, 10 jobs attempted in 13 seconds
+Outputting: threaded.pdb
