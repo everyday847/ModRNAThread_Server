@@ -59,38 +59,14 @@ def lines_from( fn ):
     f.close()
     return lines
 
-
-#def pymol_img( pdb ):
-#    from pymol import cmd
-#    cmd.load(pdb)
-#    cmd.do('rr()')
-    #cmd.set('ray_shadows', 'on')
-    #cmd.bg_color('white')
-#    cmd.set('antialias', 2)
-#    cmd.viewport(320, 240)
-#    cmd.ray(320, 240 )
-#    cmd.png('test.png')
-
 def output_png( pdb, num ):
     try:
-        #subprocess.call("/sw/bin/pymol -pc "+\
-        #                c.pdb_file + " -d \" rr(); ray 320, 240; png test.png; quit\"",
-        #                shell=True)
-        #subprocess.call(["pymol", "-qrc", "/Users/amw579/redesign_server_clone/RNA_Redesign_Server/pymol_create_image.py", "--", pdb] )
-
         subprocess.call(["pymol", "-pc",  pdb, "-d",  "orient all; rr(); ray 320, 240; png test.png; quit"] )
-        #cmd.load(pdb)
-        #cmd.orient()
-        #cmd.do("rr()")
-        #cmd.ray(320, 240)
-        #cmd.png("test.png")
-        #cmd.delete("all")
-
     except:
         e = sys.exc_info()[0]
         print e
-    try:
-        #subprocess.call("mv test.png cluster_" + str(num) + ".png",
+    
+	try:
         subprocess.call(["convert", "test.png", "-trim", "cluster_%s.png" % str(num) ])
     except:
         e = sys.exc_info()[0]
