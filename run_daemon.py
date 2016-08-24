@@ -1,25 +1,28 @@
 import time
-import sys
 import subprocess
-import shutil
+import sys
 import os
 import zipfile
 import rna_design.email_client
 
+from pymol import cmd
+cmd.do("run /home/ubuntu/Pymol_DasLab/pymol_daslab.py")
+
 def run_thread(nstruct, sequence, fmt, mutation_list, insertion_list, email):
 
     args = []
-    if server_state == "release":
-        args.append( 'rna_thread_and_minimize.linuxclangrelease' )
+	
+	if server_state == "release":
+        args.append( '/home/ubuntu/Rosetta/main/source/bin/rna_thread_and_minimize.linuxclangrelease' )
     else:
-        args.append( '/Users/amw579/Rosetta/main/source/bin/rna_thread_and_minimize.macosclangrelease' )
-    
+        args.append( '/home/ubuntu/Rosetta/main/source/bin/rna_thread_and_minimize.linuxclangdebug' )
+
     args.extend( ( '-s', 'rna.pdb', '-nstruct', str(nstruct), '-score:weights', 'rna_minimize' ) )
         
     if len( sequence ) > 0:
         args.append( '-seq' )
         args.append( sequence )
-    
+        
     if fmt != "DEFAULT":
         args.append( '-input_sequence_type' )
         args.append( fmt )
@@ -27,14 +30,14 @@ def run_thread(nstruct, sequence, fmt, mutation_list, insertion_list, email):
     if len( mutation_list ) > 0:
         args.append( '-mutation_list' )
         args.append( mutation_list )
-            
+
     if len( insertion_list ) > 0:
         args.append( '-insertion_list' )
         args.append( insertion_list )
-                            
-    subprocess.call( args )
-
-
+    
+    f = open( "out.txt", "w" )
+    subprocess.call( args, stdout=f )
+  
 def format_pdb_num(num):
     s = "S_"
 
@@ -49,114 +52,107 @@ def format_pdb_num(num):
 
 
 class SequenceCluster(object):
-    def __init__(self, sequence, pdb_file):
-        self.sequence, self.pdb_file = sequence , pdb_file
+    def __init__(self, score, pdb_file):
+        self.score, self.pdb_file = score, pdb_file
+
+
+def lines_from( fn ):
+    f = open( fn )
+    try:
+        lines = f.readlines()
+    except:
+        print "could not open", fn
+    f.close()
+    return lines
+
+def output_png( pdb, num ):
+    try:
+        subprocess.call(["pymol", "-pc",  pdb, "-d",  "orient all; rr(); ray 320, 240; png test.png; quit"] )
+    except:
+        e = sys.exc_info()[0]
+        print e
+    
+    try:
+        subprocess.call(["convert", "test.png", "-trim", "cluster_%s.png" % str(num) ])
+    except:
+        e = sys.exc_info()[0]
+        print e
+        print "convert failed on", pdb, num
 
 
 def get_top_clusters():
-    # TODO check for max number to format pdb num
-    f = open("rna_RNA.sequence_recovery.txt")
+    
+    # score vs rmsd for all!
+    f = open("score.sc")
     lines = f.readlines()
     f.close()
+    lines.pop(0)
 
-    native = ""
+    min_energy = 10000
+    max_energy = -1000
+
+    ind_rms = 0
     for l in lines:
         spl = l.split()
-        if len(spl) < 2:
-            break
-        native += spl[0]
+        if spl[1] == "total_score":
+            # label line
+            ind_rms = spl.index( "rms_from_starting" )
+        break
+    lines.pop(0)
 
-    f = open("rna_RNA.pack.txt")
-    lines = f.readlines()
-    f.close()
+    energies = [ float(line.split()[1]) for line in lines ] 
+    RMSDs =    [ float(line.split()[ind_rms]) for line in lines ] 
+    
+    print energies
+    print RMSDs
 
+    import matplotlib.pyplot as plt
+    import numpy as np
+    plt.scatter( np.array( RMSDs ), np.array( energies ) )
+    plt.savefig( "svr.png" )
+
+
+    # TODO: an actual clustering procedure (this just gives you each decoy)
+    lines = [l for l in lines_from( "score.sc" ) if l[0:5] == "SCORE" ]#and l[7:9] != "tot"]
     clusters = []
-    f = open('summary.txt', 'w')
-    f.write("model  rosetta energy  sequence  % sequence recovery\n")
     for i,l in enumerate(lines):
-        spl = l.split()
-        same = 0.0
-        for j in range(len(spl[1])):
-            if native[j] == spl[1][j]:
-                same += 1
-        percent = (same / float(len(native)))*100
-
-        f.write(format_pdb_num(i+1) + " " + spl[0] + " " + spl[1] + " " + str(percent) + "\n")
-    f.close()
-
-    for i,l in enumerate(lines):
+        if i == 0: continue
+        
+        print i,l
         spl = l.split()
         if len(clusters) == 0:
-            clusters.append(SequenceCluster(spl[1], format_pdb_num(i+1)))
+            print "appending to clusters"
+            # use i, not i+1, since score term names line is 0
+            clusters.append(SequenceCluster(spl[1], "%s.pdb" % spl[-1] )) #format_pdb_num(i)))
             continue
 
-        found = 0
-        for c in clusters:
-            if spl[1] == c.sequence:
-                found = 1
-                break
+        found = False
+        # deactivate score repetition - output everything for now
+        # (as single mutation runs will be deterministic)
+        #for c in clusters:
+        #    if spl[1] == c.score:
+        #        found = True
+        #        break
 
         if not found:
-            clusters.append(SequenceCluster(spl[1], format_pdb_num(i+1)))
+            clusters.append(SequenceCluster(spl[1], "%s.pdb" % spl[-1] )) #format_pdb_num(i))) 
             if len(clusters) > 4:
                 break
 
-    # in case you dont get to 5
-    for i,l in enumerate(lines):
-        spl = l.split()
-        if i == 0:
-            continue
-        clusters.append(SequenceCluster(spl[1], format_pdb_num(i+1)))
-        if len(clusters) > 4:
-            break
-
     for i,c in enumerate(clusters):
-        if server_state == "release":
-            subprocess.call("pymol -pc "+\
-                             c.pdb_file + " -d \" rr(); ray 320, 240; png test.png; quit\"",
-                             shell=True)
-        else:
-            subprocess.call("/Applications/MacPyMOL.app/Contents/MacOS/MacPyMOL -pc "+\
-                             c.pdb_file + " -d \" rr(); ray 320, 240; png test.png; quit\"",
-                             shell=True)
-
-
-        subprocess.call("convert test.png -trim cluster_" + str(i) + ".png",
-                        shell=True)
-
-
-    shutil.copy('../../output_README', 'README')
+        output_png( c.pdb_file, i+1 )
 
     f = zipfile.ZipFile("all.zip", "w")
     for name in os.listdir('.'):
-        if name[-4:] != '.pdb' or name[:3] == 'rna':
+        if name[-4:] != '.pdb':
             continue
         f.write(name, os.path.basename(name), zipfile.ZIP_DEFLATED)
-    f.write("summary.txt", os.path.basename("summary.txt"), zipfile.ZIP_DEFLATED)
-    f.write("README",  os.path.basename("README"), zipfile.ZIP_DEFLATED)
     f.close()
-
-def write_fa_file():
-    f = open("rna_RNA.pack.txt")
-    lines = f.readlines()
-    f.close()
-
-    f = open("sequence.fa", "w")
-    for i,l in enumerate(lines):
-        spl = l.split()
-        f.write("> " + str(i) + "\n")
-        f.write(spl[1] + "\n")
-    f.close()
-
-
-def generate_weblogo():
-    write_fa_file()
-    subprocess.call("weblogo -F png --resolution 600 --color green C 'Cytosine' --color red G 'Guanine' --color orange A 'Ade' --color blue U 'Ura' --errorbars NO < sequence.fa > weblogo.png",shell=True)
 
 
 def write_error_file(error):
     f = open("ERROR", "w")
-    f.write(error + ', an email has been sent to the administrator, please email jyesselm@stanford.edu if you have questions')
+    f.write(error + ', an email has been sent to the administrator, please email amw579@stanford.edu if you have questions')
     f.close()
 
 def update_jobs_file(lines):
@@ -165,71 +161,57 @@ def update_jobs_file(lines):
         f.write(l)
     f.close()
 
+if __name__ == '__main__' :
+    fr = open("run_jobs", "a")
 
-server_state = "development"
-if len(sys.argv) > 1:
-    server_state = sys.argv[1]
-if server_state not in ("development","release"):
-    raise SystemError("ERROR: Only can do development or release")
-
-fr = open("run_jobs", "a")
-
-while True:
-
-
-    f = open("jobs.dat")
-    lines = f.readlines()
-    f.close()
-
-    if len(lines) == 0:
-        time.sleep(60)
-        continue
-
-    print "job detected!"
-
-    spl = lines[0].split(" | ")
-    cl = lines.pop(0)
+    while True:
+        f = open("jobs.dat")
+        lines = f.readlines()
+        f.close()
+                
+        if len(lines) == 0:
+            time.sleep(5)
+            continue
         
-    job_dir = spl[0]
-    nstruct = int(spl[1])
-    sequence=spl[2].rstrip()
-    fmt=spl[3].rstrip()
-    mutation_list=spl[4].rstrip()
-    insertion_list=spl[5].rstrip()
-    email=spl[6].rstrip()
+        print "job detected!"
     
-    os.chdir(job_dir)
-    try:
-        run_thread(int(nstruct), sequence, fmt, mutation_list, insertion_list, email)
-    except:
-        write_error_file('rna_thread_and_minimize failed')
+        spl = lines[0].split(" | ")
+        cl = lines.pop(0)
+            
+        job_dir = spl[0]
+        nstruct = int(spl[1])
+        sequence=spl[2].rstrip()
+        fmt=spl[3].rstrip()
+        mutation_list=spl[4].rstrip()
+        insertion_list=spl[5].rstrip()
+        email=spl[6].rstrip()
+    
+        os.chdir(job_dir)
+        try:
+            run_thread(int(nstruct), sequence, fmt, mutation_list, insertion_list, email)
+        except:
+            print nstruct, "|%s|" % sequence, "|%s|" % fmt, "|%s|" % mutation_list, "|%s|" % insertion_list, email
+            write_error_file('rna_thread_and_minimize failed')
+            os.chdir("../..")
+            update_jobs_file(lines)
+            continue
+        
+        try:
+            get_top_clusters()
+        except:
+            write_error_file('generating top models failed')
+            os.chdir("../..")
+            update_jobs_file(lines)
+            continue
+        
+        
         os.chdir("../..")
+        print "job completed"
+                
+        if email is not None:
+            print email
+            #rna_design.email_client.send_email(email, job_dir[5:])
+    
+        fr.write(cl)
         update_jobs_file(lines)
-        continue
-
-    get_top_clusters()
-    try:
-        get_top_clusters()
-    except:
-        write_error_file('generating top models failed')
-        os.chdir("../..")
-        update_jobs_file(lines)
-        continue
-
-    try:
-        generate_weblogo()
-    except:
-        write_error_file('generating weblogo failed')
-        os.chdir("../..")
-        update_jobs_file(lines)
-        continue
-
-    os.chdir("../..")
-    print "job completed"
-
-    if email is not None:
-        rna_design.email_client.send_email(email, job_dir[5:])
-
-    fr.write(cl)
-    update_jobs_file(lines)
 
