@@ -5,14 +5,11 @@ import os
 import zipfile
 import rna_design.email_client
 
-from pymol import cmd
-cmd.do("run /home/ubuntu/Pymol_DasLab/pymol_daslab.py")
-
 def run_thread(nstruct, sequence, fmt, mutation_list, insertion_list, email):
 
     args = []
-	
-	if server_state == "release":
+    
+    if server_state == "release":
         args.append( '/home/ubuntu/Rosetta/main/source/bin/rna_thread_and_minimize.linuxclangrelease' )
     else:
         args.append( '/home/ubuntu/Rosetta/main/source/bin/rna_thread_and_minimize.linuxclangdebug' )
